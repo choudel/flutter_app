@@ -13,28 +13,27 @@ class WeatherSearchPage extends StatefulWidget {
 class _WeatherSearchPageState extends State<WeatherSearchPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Weather Search"),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        alignment: Alignment.center,
-        child: BlocBuilder<WeatherCubit, WeatherState>(
-          builder: (context, state) {
-            if (state is WeatherInitial) {
-              return buildInitialInput();
-            } else if (state is WeatherLoading) {
-              return buildLoading();
-            } else if (state is WeatherLoaded) {
-              return buildColumnWithData(state.weather);
-            } else {
-              // (state is WeatherError)
-              return buildInitialInput();
-            }
-          },
+    return Card(
+      child: Column(children: [
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          alignment: Alignment.center,
+          child: BlocBuilder<WeatherCubit, WeatherState>(
+            builder: (context, state) {
+              if (state is WeatherInitial) {
+                return buildInitialInput();
+              } else if (state is WeatherLoading) {
+                return buildLoading();
+              } else if (state is WeatherLoaded) {
+                return buildColumnWithData(state.weather);
+              } else {
+                // (state is WeatherError)
+                return buildInitialInput();
+              }
+            },
+          ),
         ),
-      ),
+      ]),
     );
   }
 
