@@ -18,7 +18,7 @@ void main() => runApp(
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             home: const MyApp(),
-            routes: {'/new': (context) => const Material()},
+            routes: {'/new': (context) => const NewBreadCrumbwidget()},
           )),
     );
 
@@ -59,6 +59,55 @@ class MyApp extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class NewBreadCrumbwidget extends StatefulWidget {
+  const NewBreadCrumbwidget({Key? key}) : super(key: key);
+
+  @override
+  _NewBreadCrumbwidgetState createState() => _NewBreadCrumbwidgetState();
+}
+
+class _NewBreadCrumbwidgetState extends State<NewBreadCrumbwidget> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    _controller = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Add new bread crumb'),
+        ),
+        body: Column(children: [
+          TextField(
+            controller: _controller,
+            decoration: const InputDecoration(hintText: 'Enter a new bread'),
+          ),
+          TextButton(
+              onPressed: () {
+                final text = _controller.text;
+                if (text.isNotEmpty) {
+                  final breadcrumb = BreadCrumb(
+                    isActive: false,
+                    name: text,
+                  );
+                  context.read<BreadCrumbProvider>().add(breadcrumb);
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text("add"))
+        ]));
   }
 }
 
